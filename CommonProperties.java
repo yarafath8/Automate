@@ -5,8 +5,13 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
-
 import org.apache.poi.xssf.usermodel.*;
+import org.openqa.selenium.winium.DesktopOptions;
+import org.openqa.selenium.winium.WiniumDriver;
+import org.openqa.selenium.winium.WiniumDriverService;
+import org.openqa.selenium.os.WindowsUtils;
+import org.openqa.selenium.winium.*;
+
 
 
 public class ObjectProperties {
@@ -16,10 +21,19 @@ public class ObjectProperties {
 	protected static XSSFCell Cell;
     
 	public static void setExcelFile(String SheetName) throws Exception {
-        FileInputStream src = new FileInputStream("D:\\New Workspace\\Scheduling\\Input_Sheet_Scheduling.xlsx");
+        FileInputStream src = new FileInputStream(filepath);
         workbook1 = new XSSFWorkbook(src);
         sheet = workbook1.getSheet(SheetName);
        }
+	
+	public void OpenWindowsApplication() throws IOException, Exception {
+	 
+	 DesktopOptions options= new DesktopOptions();
+     options.setApplicationPath(EXEPath);
+     WiniumDriverService service = new WiniumDriverService.Builder().usingPort(9999).withVerbose(true).withSilent(false).buildDesktopService();
+	 WPF1=new WiniumDriver(service,options);
+     
+ }
 
 	File src=new File("D:\\New Workspace\\Scheduling\\ObjectRepo");	  
 	FileInputStream fis;
