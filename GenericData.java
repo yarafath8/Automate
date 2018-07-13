@@ -100,6 +100,56 @@ public class GenericData {
 		}
 		return status;
 	}
+		 
+		 
+	public boolean isPatternPresent(Pattern image) throws FindFailed {
+
+	  boolean status = false;
+	  try {
+		  s.find(image);
+		  status = true;
+	  } catch (FindFailed e) {
+		  status = false;
+	  }
+	  return status;
+	 }
+		 
+		 
+	public void ApplicableMacros() throws Exception {
+		
+		CommonProperties.setExcelFile("Site");
+		for(int i=1; i<=sheet.getLastRowNum(); i++)
+		{ 
+			XSSFCell cell = sheet.getRow(i).getCell(1);
+			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");	
+			String databaseName=cell.getStringCellValue();
+			if(databaseName.equals("xxxmmm"))
+			{
+				databaseName="xxmmm";
+			}
+			String dbURL = "jdbc:sqlserver://000.000.000.00;databaseName="+databaseName;
+			String username = "username";
+			String password = "password";
+		
+			Connection conn = DriverManager.getConnection(dbURL,username,password);
+			Statement st = conn.createStatement();
+			this.DefaultTemplate();
+			String sqlStr = "";
+			ResultSet rs = st.executeQuery(sqlStr);
+			System.out.println(rs);
+			CommonProperties.setExcelFile("IntraOp");
+			Row R1= sheet.createRow(1);
+			for(int j=0;rs.next();j++)
+			{
+				org.apache.poi.ss.usermodel.Cell C1=R1.createCell(j);
+				String CellValue= rs.getString("DisplayName");
+				C1.setCellValue(CellValue);
+				FileOutputStream fos = new FileOutputStream(InputSheet);
+				workbook1.write(fos);
+			}
+		
+		}
+	}
 	
 }
 
